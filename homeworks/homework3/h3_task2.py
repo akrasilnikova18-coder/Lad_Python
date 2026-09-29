@@ -12,6 +12,5 @@ while True:
         print(f"Введено число: {number}")
         continue
     
-    if number == 0:
-        print(f"Сумма всех введенных чисел: {sum}")
-        break
+    print(f"Сумма всех введенных чисел: {sum}")
+    break
