@@ -13,31 +13,41 @@ if my_email:
 
     is_dog = ""
 
-    if my_email.find("@") != -1:
-        is_dog = my_email.find("@")
+    if (is_dog := my_email.find("@")) != -1:
         print(f"Собака найдена - символ {is_dog}")
         
         my_email = my_email.split("@")
         print(my_email)
         
+        if my_email[0].isalnum():
+            print(f"Первая часть email содержит буквенные значения: {my_email[0]}")
+        else:
+            print("Ошибка! Первая часть email содержит не только буквенные значения")
+        
         if my_email[1].find(".") != -1:
             print(f"В доменной части есть точка")
+
+            part2_email = my_email[1].split(".")
+            print(part2_email)
+
+            if part2_email[0].isalnum():
+                print("Во второй части email есть только буквы и цифры")
+            else:
+                print("Ошибка! Во второй части email есть не только буквы и цифры")
+
+            if part2_email[1].isalnum() and len(part2_email[1]) >= 2:
+                print("На конце email есть только буквы и цифры, и он больше или равен двум символам")
+            else:
+                print(
+                    "Ошибка! На конце email есть не только буквы и цифры и / или он меньше двух символов"
+                )
+
         else:
             print("Ошибка! В доменной части нет точки")
-
-        if (my_email[0].isalnum() or my_email[0] == ".") and (my_email[1].isalnum() or my_email[0] == "."):
-            print(f"Email содержит буквенные значения: {my_email[0]}, {my_email[1]}")
-        else:
-            print("Ошибка! Email содержит не только буквенные значения")
-
+            
     else:
         print("Собака не найдена")
 
-    if my_email[-1].isalpha or my_email[-2].isalpha:
-        print("На конце email буквенные символы")
-    else:
-        print("Ошибка! На конце email не буквенные символы")
-        
 else:
     print("Ошибка! Email не может быть пустым")
     
