@@ -16,29 +16,23 @@ if my_email:
     if my_email.find("@") != -1:
         is_dog = my_email.find("@")
         print(f"Собака найдена - символ {is_dog}")
+        
+        my_email = my_email.split("@")
+        print(my_email)
+        
+        if my_email[1].find(".") != -1:
+            print(f"В доменной части есть точка")
+        else:
+            print("Ошибка! В доменной части нет точки")
+
+        if (my_email[0].isalnum() or my_email[0] == ".") and (my_email[1].isalnum() or my_email[0] == "."):
+            print(f"Email содержит буквенные значения: {my_email[0]}, {my_email[1]}")
+        else:
+            print("Ошибка! Email содержит не только буквенные значения")
+
     else:
         print("Собака не найдена")
-        
-    if is_dog and is_dog+2 < len(my_email):
-        print(my_email[is_dog+2])
-        
-        if my_email[is_dog+1].isalnum() and my_email[is_dog+2].isalnum() and (my_email[is_dog-1].isalnum() or my_email[is_dog-1] == ".") and (my_email[is_dog-2].isalnum() or my_email[is_dog-2] == "."):
-            print(f"До и после собаки правильные символы: {is_dog+2}, {is_dog+1}, {is_dog-1}, {is_dog-2}")
-            
-            for number in range(is_dog, len(my_email)):
-                if my_email.find("."):
-                    is_point = my_email.find(".") + is_dog
-                    print(f"В доменной части есть точка - символ {is_point}")
-                    break
-                    
-                else:
-                    print("Ошибка! В доменной части нет точки")
-        else:
-            print("Ошибка! До и после собаки есть недопустимые символы")
-            
-    else:
-        print("Ошибка! Собаки нет или неправильные символы после собаки")
-        
+
     if my_email[-1].isalpha or my_email[-2].isalpha:
         print("На конце email буквенные символы")
     else:

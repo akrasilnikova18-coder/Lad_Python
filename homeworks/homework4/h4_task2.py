@@ -7,12 +7,12 @@ dirty = " Текст   про   большого!!! пушистого %, тол
 
 #убираем пробелы с начала и с конца, переводим строку в список
 new_text = dirty.strip()
-new_text = new_text.split()
+words_list = new_text.split()
 
 #каждое слово начинаем с заглавной буквы
 capital = []
-for char in new_text:
-    capital.append(char.capitalize())
+for word in words_list:
+    capital.append(word.capitalize())
 
 new_text = " ".join(capital)
 
