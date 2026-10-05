@@ -26,19 +26,17 @@ for row in matrix:
 
 print(f"Максимальный элемент: {max_element}")
 
-#нужно сделать «транспонированную» матрицу (строки и столбцы поменять местами)
-zero_elements = []
-fist_elements = []
-second_elements = []
-third_elements = []
-
-for row in matrix:
-    zero_elements.append(row[0])
-    fist_elements.append(row[1])
-    second_elements.append(row[2])
-    third_elements.append(row[3])
-
+new_row = []
 new_matrix = []
-new_matrix.append([zero_elements, fist_elements, second_elements, third_elements])
 
+#нужно сделать «транспонированную» матрицу (строки и столбцы поменять местами
+for i in range (0, len(matrix[0])):
+    for j in range (0, len(matrix)):
+        new_row.append(matrix[j][i])
+print(new_row)
+
+new_rows = len(matrix[0]) #должно быть 4 строки, так как у матрицы было 4 столбца
+new_cols = len(matrix) #должно быть 3 столбца, так как у матрицы было 3 строки
+
+new_matrix = [[new_row[i*new_cols + j] for j in range(new_cols)] for i in range(new_rows)]
 print(new_matrix)
