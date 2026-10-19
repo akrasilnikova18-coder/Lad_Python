@@ -9,6 +9,8 @@ articles = [
     {"title": "Панды в Московском зоопарке", "category": "Панды", "author": "Ирина", "rating": 6.0, "views": 5165,},
 ]
 
+keys_list = ["title", "category", "author", "rating", "views"]
+
 
 def create_article(title: str, category: str, author: str, rating: float, views: int) -> dict:
     """Новая статья. Создается словарь статьи и добавляется в список
@@ -49,7 +51,7 @@ def sort_articles(articles_list: list, key="rating", reverse=True, bonus="views"
     """Сортировка по заголовку / рейтингу / категории / просмотрам / автору. Возвращает отсортированный список
     Кортеж из двух полей решает задачу вторичной сортировки, потому что сначала статьи
     сравниваются по ключу, а потом, если ключи одинаковые - то по бонусу"""
-    if key in articles_list[0]:
+    if key in keys_list:
         return sorted(articles_list, key=lambda a: (a[key], a.get(bonus, 0)), reverse=reverse)
     else:
         print("Неверное значение key")
@@ -123,8 +125,8 @@ while True:
             continue
             
     elif command == "sort":
-        key = input("Поле для сортировки (title, category, author, rating, views) ")
-        bonus = input("Введите второй параметр сортировки (title, category, author, rating, views) ")
+        key = input(f"Поле для сортировки {keys_list} ")
+        bonus = input(f"Введите второй параметр сортировки {keys_list} ")
         reverse = input("Сортировать по убыванию? ")
         
         if reverse:
@@ -177,4 +179,7 @@ def countdown(n: int) -> int:
     countdown(n - 1)
 
 countdown(8)
+
+# новый список и ключ сравниваем со списком!
+# если в качестве аргумента в функцию передать список
     
