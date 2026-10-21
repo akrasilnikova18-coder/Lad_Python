@@ -44,3 +44,48 @@ print(product.price) # вызывается геттер - проверяем р
 print(product.name)
 product.name = "Ноутбук HP"
 print(product.name)
+
+"""Для @lru_cache: найдите его в документации functools и напишите функцию fibonacci с кэшированием,
+затем ту же функцию без кэша. Сравните время выполнения для n = 30 (через time.perf_counter())
+и объясните комментарием, почему с кэшем быстрее."""
+
+
+# Функция Фибоначчи без кэша
+def fibonacci(n: int):
+    """Возвращает число Фибоначчи для n"""
+    if n < 2:
+        return n
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+
+# Функция Фибоначчи с кэшем
+@lru_cache(maxsize=None)
+def fibonacci_cache(n: int):
+    """Возвращает число Фибоначчи для n"""
+    if n < 2:
+        return n
+    return fibonacci_cache(n - 1) + fibonacci_cache(n - 2)
+
+
+# Вызов функции без кэша
+for i in range(30, -1, -1):
+    print(f"F({i}) = {fibonacci(i)}")
+
+# Вызов функции с кэшем
+for i in range(30, -1, -1):
+    print(f"F({i}) = {fibonacci_cache(i)}")
+
+# Замеряем время без кэша
+start1 = time.perf_counter()
+result1 = fibonacci(30)
+time1 = time.perf_counter() - start1
+
+# Замеряем время с кэшем
+start2 = time.perf_counter()
+result2 = fibonacci_cache(30)
+time2 = time.perf_counter() - start2
+
+print(f"Без кэша функция fibonacci отработала за {time1:.6f} секунд")
+print(f"С кэшем функция fibonacci отработала за {time2:.6f} секунд")
+
+# Без кэша функция каждый раз вычисляет одни и те же числа Фибоначчи. С кэшем результат сохраняется, поэтому быстрее
