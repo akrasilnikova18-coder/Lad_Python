@@ -1,0 +1,11 @@
+{
+  "title": "Моя первая статья",
+  "author": "Анна",
+  "tags": [
+    "Python",
+    "JSON",
+    "файлы"
+  ],
+  "published": true,
+  "views": 120
+}
