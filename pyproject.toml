@@ -3,6 +3,7 @@ name = "ladpython"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "colorama>=0.4.6",
     "rich>=15.0.0",
     "ruff>=0.16.8",
 ]
