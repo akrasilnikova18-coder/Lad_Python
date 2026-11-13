@@ -1,0 +1,74 @@
+{
+  "authors": [
+    {
+      "id": 1,
+      "name": "Иван Петров"
+    },
+    {
+      "id": 2,
+      "name": "Анна Смирнова"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "title": "Backend"
+    },
+    {
+      "id": 2,
+      "title": "Frontend"
+    }
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "title": "Python"
+    },
+    {
+      "id": 2,
+      "title": "Django"
+    },
+    {
+      "id": 3,
+      "title": "SQL"
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Введение в ООП",
+      "content": "Классы и объекты — основа ООП.",
+      "author_id": 1,
+      "category_id": 1,
+      "tag_ids": [
+        1,
+        2
+      ],
+      "created_at": "2026-11-13T19:59:18.580389"
+    },
+    {
+      "id": 2,
+      "title": "Django-модели: мост к базе данных",
+      "content": "Модели описывают структуру данных и связи таблиц.",
+      "author_id": 1,
+      "category_id": 1,
+      "tag_ids": [
+        1,
+        2,
+        3
+      ],
+      "created_at": "2026-11-13T19:59:18.580427"
+    },
+    {
+      "id": 3,
+      "title": "Семантика HTML",
+      "content": "Правильная разметка делает страницы доступными.",
+      "author_id": 2,
+      "category_id": 2,
+      "tag_ids": [
+        1
+      ],
+      "created_at": "2026-11-13T19:59:18.580431"
+    }
+  ]
+}
