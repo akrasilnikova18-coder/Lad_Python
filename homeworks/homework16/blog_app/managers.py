@@ -4,6 +4,21 @@ from datetime import datetime
 from .models import Author, Category, Tag, Post
 
 
+# Уникальность и валидация. Сделайте модель устойчивой:
+# add_author/add_category/add_tag должны бросать ValueError,
+# если объект с таким именем/названием уже есть;
+# create_post должен бросать ValueError,
+# если title пустой или если author/category переданы как None.
+# Подсказка: это пересекается с занятием 12 (обработка исключений) —
+# используйте raise ValueError(...) с понятным сообщением и обработайте его в main.py.
+
+
+# Усложнить связи многие-ко-многим (теги).
+# Сделайте Blog.add_tag_to_post(post, tag) возвращающим True, если тег был добавлен, и False, если такой тег у поста уже есть (без создания дубликата).
+# Убедитесь, что при повторном добавлении не ломается согласованность Tag._posts (дубликат не появляется).
+# Добавьте метод Blog.tags_of_post(post) — список названий тегов поста — и выведите его для каждого поста.
+
+
 class Blog:
     def __init__(self) -> None:
         self._authors: list[Author] = []
@@ -16,31 +31,57 @@ class Blog:
         new_id = self._next_ids[kind]
         self._next_ids[kind] += 1
         return new_id
-    
+
     def add_author(self, name: str) -> Author:
+        if any(author.name == name for author in self._authors):
+            raise ValueError(f"Автор с таким именем уже есть: {name}")
+
         author = Author(name=name, id=self.new_id(kind="author"))
         self._authors.append(author)
         return author
     
     def add_category(self, title: str) -> Category:
+        if any(category.title == title for category in self._categories):
+            raise ValueError(f"Категория с таким названием уже есть: {title}")
+
         category = Category(title=title, id=self.new_id(kind="category"))
         self._categories.append(category)
         return category
     
     def add_tag(self, title: str) -> Tag:
+        if any(tag.title == title for tag in self._tags):
+            raise ValueError(f"Тег с таким названием уже есть: {title}")
+
         tag = Tag(title=title, id=self.new_id(kind="tag"))
         self._tags.append(tag)
         return tag
     
-    def create_post(self, title: str, content: str, author: Author, category: Category) -> Post:
-        post = Post(title=title, content=content, author=author, category=category, id=self.new_id(kind="post"))
-        author.add_post(post)
-        category.add_post(post)
-        self._posts.append(post)
-        return post
+    def create_post(self, title: str, content: str, author: Author, category: Category) -> Post | None:
+        if not title or not author or not category:
+            raise ValueError("Все поля обязательны для заполнения")
+            return
+        else:
+            post = Post(
+                title=title,
+                content=content,
+                author=author,
+                category=category,
+                id=self.new_id(kind="post"),
+            )
+            author.add_post(post)
+            category.add_post(post)
+            self._posts.append(post)
+            return post
 
-    def add_tag_to_post(self, post: Post, tag: Tag) -> None:
+    def add_tag_to_post(self, post: Post, tag: Tag) -> bool:
+        if tag in post.tags:
+            return False
+
         post.add_tag(tag)
+        return True
+
+    def tags_of_post(self, post: Post) -> list[str]:
+        return post.tag_titles
         
     @property
     def authors(self) -> list[Author]:

@@ -32,45 +32,71 @@ def find_tag(blog: Blog, title: str) -> Tag | None:
 def find_posts(blog: Blog, text: str) -> list[Post]:
     posts = []
     for post in blog.posts:
-        if text in post.content:
+        if text in post.content or text in post.title:
             posts.append(post)
     return posts
-
+        
 
 def main() -> None:
     blog = Blog()
 
     # 1. создаём авторов, категории и теги
-    ivan = blog.add_author("Иван Петров")
-    anna = blog.add_author("Анна Смирнова")
+    try:
+        ivan = blog.add_author("Иван Петров")
+        anna = blog.add_author("Анна Смирнова")
+        anna = blog.add_author("Анна Смирнова")
+    except ValueError as error:
+        print(f"Ошибка: {error}")
 
-    backend = blog.add_category("Backend")
-    frontend = blog.add_category("Frontend")
+    try:
+        backend = blog.add_category("Backend")
+        frontend = blog.add_category("Frontend")
+        frontend = blog.add_category("Frontend")
+    except ValueError as error:
+        print(f"Ошибка: {error}")
 
-    python_tag = blog.add_tag("Python")
-    django_tag = blog.add_tag("Django")
-    sql_tag = blog.add_tag("SQL")
+    try:
+        python_tag = blog.add_tag("Python")
+        django_tag = blog.add_tag("Django")
+        sql_tag = blog.add_tag("SQL")
+        sql_tag = blog.add_tag("SQL")
+    except ValueError as error:
+        print(f"Ошибка: {error}")
+
 
     # 2. создаём посты (связываем с автором и категорией)
-    post1 = blog.create_post(
-        "Введение в ООП",
-        "Классы и объекты — основа ООП.",
-        author=ivan,
-        category=backend,
-    )
-    post2 = blog.create_post(
-        "Django-модели: мост к базе данных",
-        "Модели описывают структуру данных и связи таблиц.",
-        author=ivan,
-        category=backend,
-    )
-    post3 = blog.create_post(
-        "Семантика HTML",
-        "Правильная разметка делает страницы доступными.",
-        author=anna,
-        category=frontend,
-    )
+    try:
+        post1 = blog.create_post(
+            "Введение в ООП",
+            "Классы и объекты — основа ООП.",
+            author=ivan,
+            category=backend,
+        )
 
+        post2 = blog.create_post(
+            "Django-модели: мост к базе данных",
+            "Модели описывают структуру данных и связи таблиц.",
+            author=ivan,
+            category=backend,
+        )
+        
+        post3 = blog.create_post(
+            "Семантика HTML",
+            "Правильная разметка делает страницы доступными.",
+            author=anna,
+            category=frontend,
+        )
+
+        post4 = blog.create_post(
+            title="",
+            content="Правильная разметка делает страницы доступными.",
+            author=anna,
+            category=frontend,
+        )
+
+    except ValueError as error:
+        print(f"Ошибка: {error}")
+    
     # 3. навешиваем теги (многие-ко-многим)
     blog.add_tag_to_post(post1, python_tag)
     blog.add_tag_to_post(post1, django_tag)
@@ -115,16 +141,21 @@ def main() -> None:
         print(f"\nПосты по тегу: «{tag.title}»:")
         for post in loaded.posts_by_tag(tag):
             print(f"  - {post.title}")
-
-    # 10. Поиск постов по тексту
-    posts = find_posts(loaded, "ООП")
-    if not posts:
-        print("Постов с таким текстом не найдено")
-    else:
-        print("\nНайдены посты:")
+            
+    # 10. Поиск постов по названию
+    posts = find_posts(loaded, "структуру")
+    if posts is not None:
+        print("\nПосты, где есть текст:")
         for post in posts:
-            print(f"  - {post.title}")
-    
+            print(f"  - {post.title} - {post.content}")
+            
+            
+    #11 Проверка задания "Усложнить связи многие-ко-многим (теги)"
+    print("\nПосты, где есть теги:")
+    for post in blog.posts:
+        print(f"Пост: {post.title}")
+        print(f"Теги: {', '.join(blog.tags_of_post(post)) or 'нет'}")
+
 
 if __name__ == "__main__":
     main()
